@@ -1,0 +1,50 @@
+= PHM Demo Process and Rules Tracing
+
+Example tracing or auditing of rules and processes with event listeners.
+
+All events are logged to the console.
+
+Some agenda events are posted to Kafka topic PHM-Audit.
+
+Rum mvn clean package and install the jar file in the Kie Server class path.
+
+Add kafka-clients-<kafka version>.jar to the class path as well.
+
+Add the following classes to the business automation project deployment descriptor
+kie-deployment-descriptor.xml
+as in this example:
+
+[source,XML]
+----
+    <event-listeners>
+        <event-listener>
+            <resolver>mvel</resolver>
+            <identifier>new com.health_insurance.tracing.PHMProcessEventListener()</identifier>
+            <parameters/>
+        </event-listener>
+    </event-listeners>
+    <task-event-listeners>
+        <task-event-listener>
+            <resolver>mvel</resolver>
+            <identifier>new com.health_insurance.tracing.PHMTaskLifeCycleEventListener()</identifier>
+            <parameters/>
+        </task-event-listener>
+    </task-event-listeners>
+----
+
+Add the following classes to the kmodule.xml
+as in this example:
+
+[source,XML]
+----
+<kmodule xmlns="http://www.drools.org/xsd/kmodule" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <kbase name="phm" default="true" eventProcessingMode="cloud" equalsBehavior="identity">
+    <ksession name="phm" type="stateless" default="true" clockType="realtime">
+      <listeners>
+          <ruleRuntimeEventListener type="com.health_insurance.tracing.PHMRuleRuntimeEventListener"/>
+          <agendaEventListener type="com.health_insurance.tracing.PHMAgendaEventListener"/>
+      </listeners>
+  </ksession>
+</kbase>
+</kmodule>
+----
