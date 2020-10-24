@@ -3,6 +3,7 @@
 .*
 !/.gitignore
 
+
 # Compiled source #
 ###################
 **/target
@@ -33,6 +34,7 @@
 
 # generated files #
 ######################
+*.iml
 .DS_Store
 .DS_Store?
 ._*
@@ -40,6 +42,5 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
-*.iml
 *~
 *.~lock*
