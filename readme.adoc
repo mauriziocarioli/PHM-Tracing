@@ -6,6 +6,8 @@ All events are logged to the console.
 
 Some agenda events are posted to Kafka topic PHM-Audit.
 
+https://mauriziocarioli.github.io/PHM-Tracing/[API Reference]
+
 Rum mvn clean package and install the jar file in the Kie Server class path.
 
 Add kafka-clients-<kafka version>.jar to the class path as well.
